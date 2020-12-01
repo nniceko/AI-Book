@@ -1,0 +1,11 @@
+# 가장 먼저 텐서플로우 라이브러리를 임포트 하자
+import tensorflow as tf
+# 원소 5개의 1차원 python 배열(list) 생성
+c = [1, 2, 3, 4, 5] # 배열(list) 선언
+# list의 요소와 타입을 출력
+print(c, type(c))
+# list를 상수형 텐서로 변환
+c_tensor = tf.constant(c)
+# 상수형 텐서와 타입을 출력
+print(c_tensor, type(c_tensor))
+print( type(c_tensor.numpy()))
