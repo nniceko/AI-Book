@@ -1,0 +1,18 @@
+# 가장 먼저 텐서플로우 라이브러리를 임포트 하자
+import tensorflow as tf
+# ‘a’라는 별명과 정수 3의 값을 갖는 변수 tensor_a 선언
+tensor_a = tf.constant(3, name='a')
+tensor_b = tf.constant(2, name='b')
+tensor_c = tf.constant(1, name='c')
+# 각 텐서의 곱과 합을 계산하여 tensor_d와 tensor_e에 할당
+tensor_d = tensor_a * tensor_b
+tensor_e = tensor_d + tensor_c
+
+# sess = tf.Session() 
+# print(sess.run(tensor_e)) 
+# sess.close() 
+
+# tensor_e의 텐서 구조 출력
+print(tensor_e)
+# tensor_e의 상수값만 출력
+print("{}".format(tensor_e))
