@@ -1,0 +1,10 @@
+import tensorflow as tf
+
+x = tf.constant([0.9, 2.6, 2.3, 1.5, -4.5])
+a = tf.round(x) # 반올림
+b = tf.floor(x)  # 버림
+print(a) 
+print(b) 
+print(tf.maximum(a,b))  # 두 벡터를 비교해서 각 요소별 최대값
+print(tf.cumsum(a, axis=0)) # 벡터 a의 요소 값들을 행 기준 (axis=0)으로 누적합
+print(tf.math.cumprod(b, axis=0)) # 벡터 b의 요소 값들을 행 기준으로 누적곱
