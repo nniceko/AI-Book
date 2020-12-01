@@ -1,0 +1,11 @@
+import tensorflow as tf
+a = tf.range(10, delta=2, dtype=tf.int32) #0부터 9까지 2씩 건너뛴 벡터 텐서
+print(a)
+b = 3 * tf.ones(5, dtype=tf.int32) # 1로 구성된 벡터 텐서
+print(b)
+print(tf.add(a, b)) # a+b
+print(a+b)        # a+b
+print(tf.multiply(a,b)) # a*b
+print(a*b)            # a*b
+a = tf.add(3, 3.2)
+print(a)
