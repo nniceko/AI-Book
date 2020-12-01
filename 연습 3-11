@@ -1,0 +1,28 @@
+import tensorflow as tf
+
+a = tf.constant([[2, 0], [0, 1]], dtype=tf.float32) 
+b = tf.constant([[1, 1], [1, 1]], dtype=tf.float32) 
+print(tf.matmul(a, b)) # matmul() 연산
+print(tf.multiply(a,b))  # multiply() 연산
+print(a*b)  # * 연산
+print()
+
+print(tf.linalg.inv(a))
+print()
+
+t = [[1, 2, 3], [4, 5, 6]]
+print(tf.reshape(t, [3, 2]))
+print()
+
+x = tf.constant([[1, 2, 3], [4, 5, 6]])
+print(tf.transpose(x))
+print()
+
+y = tf.expand_dims(x, 0) # 2x3 크기의 2차원 행렬을 0번째 인덱스에 1차원 늘려 1x2x3 크기의 3차원 행렬로 변환
+print(y)
+y1 = tf.expand_dims(y, 3) # 1x2x3 크기의 3차원 행렬을 3번째 인덱스에 1차원 늘려 1x2x3x1 크기의 4차원 행렬로 변환
+print(y1)
+print()
+
+z = tf.squeeze(y1)
+print(z)           #1x2x3x1 크기의 4차원 행렬을 앞뒤로 한차원씩 줄여 2x3차원 벡터로 변환
