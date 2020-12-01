@@ -1,0 +1,29 @@
+import tensorflow as tf
+
+x = tf.constant([[True,  True], [False, False]]) 
+print(tf.reduce_any(x))  # True 모든 차원으로 줄임
+print(tf.reduce_any(x, 0))  # [True, True] 행 방향으로 or 연산
+print(tf.reduce_any(x, 1))  # [True, False] 열 방향으로 or 연산
+
+print(tf.reduce_all(x))  # False
+print(tf.reduce_all(x, 0))  # [False, False] 행 방향으로 and 연산
+print(tf.reduce_all(x, 1))  # [True, False] 열 방향으로 and 연산
+
+y = tf.constant([[1., 1.], [2., 2.]])
+print(tf.reduce_mean(y)) # 1.5   
+print(tf.reduce_mean(y, 0))  # [1.5, 1.5] 행 방향으로 평균 연산 ((1+2)/2,                                    # (1+2)/2)
+print(tf.reduce_mean(y, 1)) # [1.,  2.] (1+1)/2, (2+2)/2
+
+z = tf.constant([[0., 0., 0.], [0., 0., 0.]])
+print(tf.reduce_logsumexp(z))  # log(6) exp(0)+exp(0)+...+exp(0) = 6
+print(tf.reduce_logsumexp(z, 0))  # [log(2), log(2), log(2)]
+print(tf.reduce_logsumexp(z, 1))  # [log(3), log(3)] 
+# [log(sum(exp(0)+exp(0)+exp(0)))] [log(sum(exp(0)+exp(0)+exp(0)))] 
+print(tf.reduce_logsumexp(z, 1, keepdims=True))  # [[log(3)], [log(3)]]
+
+t = tf.constant([[1, 2, 3], [1, 1, 1]], dtype = tf.float32)
+print(tf.math.reduce_euclidean_norm(t))  # returns 4.1231055 which is                                                 # sqrt(17)
+# (1^2+1^1)+ (2^2+1^1)+ (3^2+1^1)=17
+print(tf.math.reduce_euclidean_norm(t, 0))  # [sqrt(2), sqrt(5), sqrt(10)]
+print(tf.math.reduce_euclidean_norm(t, 1))  # [sqrt(14), sqrt(3)]
+print(tf.math.reduce_euclidean_norm(t, 1, keepdims=True))  # [[sqrt(14)],                                                                 #   [sqrt(3)]
