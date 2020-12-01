@@ -1,0 +1,10 @@
+# 텐서플로우 라이브러리를 임포트
+import tensorflow as tf
+# 그래프 생성
+my_graph = tf.Graph()
+# 생성된 그래프를 디폴트 그래프로 사용
+with my_graph.as_default():
+    # float값 3.0, 4.0을 갖는 텐서 변수 선언
+    node1 = tf.constant(3.0, dtype=tf.float32)
+    node2 = tf.constant(4.0) # 암시적으로 tf.float32 타입으로 선언
+    print(node1, node2)
