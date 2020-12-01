@@ -1,0 +1,35 @@
+import tensorflow as tf
+import numpy as np
+import matplotlib as mpl
+import matplotlib.pylab as plt
+
+X = [1., 2., 3.]
+
+# tf.Variable: 그래프를 계산하면서 최적화 할 변수
+# tf.random_normal: 각 변수들의 초기값을 정규분포 랜덤 값으로 초기화
+W = tf.Variable(tf.random.normal([1], dtype=tf.float32))
+b = tf.Variable(tf.random.normal([1], dtype=tf.float32))
+
+@tf.function  #tf.function
+def forward(x):
+  return X * W + b  #일차 식
+
+Y = forward(X)
+
+print(Y)
+plt.plot(X, Y, 'ro')
+plt.plot(X,Y) 
+plt.show()
+
+plt.title("Plot")
+plt.plot([1, 4, 9, 16], 'ro') # x축은 자동으로 0, 1, 2, 3, 'ro' red 점으로 표현
+plt.show()
+
+plt.title("x ticks")
+plt.plot([10, 20, 30, 40], [1, 4, 9, 16]) #x축과 y축을 동시에 준 경우
+plt.show()
+
+x = np.arange(0, 5, 0.1)
+y = np.sin(x)
+plt.plot(x, y)
+plt.show()
