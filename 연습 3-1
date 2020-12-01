@@ -1,0 +1,6 @@
+# 가장먼저 텐서플로우 라이브러리를 임포트 하자
+import tensorflow as tf
+#constant 함수로 문장을 상수로 변환하여 hello변수에 저장한다.
+hello = tf.constant('Hello, TensorFlow!')
+# 지금까지 코드를 화면에 출력한다.
+print(hello)
