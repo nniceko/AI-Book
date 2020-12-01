@@ -1,0 +1,6 @@
+import tensorflow as tf
+
+mean, std =0, 1 # 정규분포를 위한 평균과 표준편차 설정
+print(tf.random.uniform((2, 3),seed=0)) # seed를 0으로 설정, default range                                           #  [0,1)
+print(tf.random.normal((2, 3), mean, std))
+print(tf.random.truncated_normal((2,3), mean, std))
