@@ -1,0 +1,30 @@
+import tensorflow as tf
+
+X = [[1., 2., 3.], 
+      [4., 5., 6.]] # 입력 값은 2차원 벡터 3개
+
+# tf.Variable: 그래프를 계산하면서 최적화 할 변수
+# tf.random_normal: 각 변수들의 초기값을 정규분포 랜덤 값으로 초기화
+W = tf.Variable(tf.random.normal([3, 2], dtype=tf.float32))
+b = tf.Variable(tf.random.normal([2, 1], dtype=tf.float32))
+
+# 입력값과 변수들을 계산할 수식을 작성. 벡터 내적
+#[2, 3] x [3, 2] => [2, 2] + [2, 1] =>[2, 2]
+
+W = tf.Variable(tf.random.normal([3, 2], dtype=tf.float32), name="W")
+b = tf.Variable(tf.random.normal([2, 1], dtype=tf.float32), name="b")
+
+@tf.function  #tf.function
+def forward(x):
+  return tf.matmul(x, W) + b
+
+Y = forward(X)
+
+print("=== X ===")
+print(X)
+print("=== W ===")
+print(W)
+print("=== b ===")
+print(b)
+print("=== Y ===")
+print(Y)
