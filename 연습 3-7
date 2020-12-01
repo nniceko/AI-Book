@@ -1,0 +1,9 @@
+import tensorflow as tf
+
+W = tf.Variable(tf.random.normal((3, 2)))
+b = tf.Variable(tf.random.normal((2, 1)))
+# 다음과 같이 변수형 텐서에 직접 값을 넣어줄 수 도 있다 
+# W = tf.Variable([[0.1,0.1], [0.2,0.2], [0.3,0.3]])
+print(W)
+print(b)
+print(tf.matmul(W,b)) # 두 행렬의 곱 연산(matmul()), Tensor로 변경되어 연산
