@@ -1,0 +1,42 @@
+import numpy as np 
+import tensorflow as tf 
+
+#케라스 라이브러리 중 Sequential()함수와 Dense()함수를 불어와서 사용할 경우
+#from tensorflow.keras.models import Sequential
+#from tensorflow.keras.layers import Dense
+
+#입력벡터와 출력 벡터 
+x = np.array([[1, 1], [1, 0], [0, 1], [0, 0]]) 
+y = np.array([[0], [1], [1], [0]])
+
+#시퀀셜 함수를 이용하여 딥러닝 네트워크 구조를 한층한층 쌓을 수 있는 모델 생성
+model = tf.keras.Sequential()
+#레이어 객체의 Dense()함수를 이용하여 입력 벡터2, 유닛 개수 2, 활성화 함수는 시그모이드를 갖는 1번째 레이어를 설정한다.
+model.add(tf.keras.layers.Dense(units=2, input_dim=2, activation='sigmoid'))
+#레이어 객체의 Dense()함수를 이용하여 유닛 개수 1, 활성화 함수는 시그모이드를 갖는 2번째 레이어를 설정한다.
+model.add(tf.keras.layers.Dense(units=1, activation='sigmoid')) 
+
+#모델을 준비시키는 명령어: 학습률 0.1, 손실은 ‘mean_squarred_error’, 최적화는 SGD를 사용                       
+model.compile(optimizer=tf.optimizers.SGD(learning_rate=0.1), loss='mse')
+
+#학습된 모델의 구조를 요약하여 보여준다.
+model.summary()
+#모델을 학습 시킨다. x와 y변수들을 전달하여 학습데이터로 사용하고, 3000번 반복, 배치크기는 1
+# 기본값은 32. 미니 배치 경사 하강법을 사용하고 싶지 않을 경우에는 
+# batch_size=None
+history = model.fit(x, y, epochs=3000, batch_size=1)
+
+#학습을 통해 구해진 가중치와 바이어스를 확인해보자
+print("=============weights==========")
+for weight in model.weights: 
+  print(weight)
+
+#학습결과에 대한 loss평가
+loss= model.evaluate(x,y, batch_size=1)
+print('loss :', loss)
+
+#새로운 값을 입력으로 넣어 모델의 출력결과를 예측해보자.
+print("=============test results==========")
+print(x)
+print(model.predict(x))
+print("===================================")
