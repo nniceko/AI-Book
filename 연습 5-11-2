@@ -1,0 +1,28 @@
+# 바퀴와 날개의 유무에 따라, '배','자동차','비행기'로 분류하는 신경망 모델
+# 신경망은 3개의 다층 레이어로 구성
+import tensorflow as tf
+import numpy as np
+import os
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow import keras
+
+# [바퀴, 날개]
+x_data = np.array(
+    [[0, 0], [1, 0], [1, 1], [0, 0], [0, 0], [0, 1]])
+
+y_data = np.array([
+    [1, 0, 0],  # 배
+    [0, 1, 0],  # 자동차
+    [0, 0, 1],  # 비행기
+    [1, 0, 0],  # 배
+    [1, 0, 0],  # 배
+    [0, 0, 1]   # 비행기
+])
+
+# 가중치와 옵티마이저를 포함하여 정확히 동일한 모델을 다시 생성
+new_model = keras.models.load_model("/content/gdrive/My Drive/Colab Notebooks/my_model.h5")
+new_model.summary()
+
+loss, acc = new_model.evaluate(x_data,  y_data, verbose=2)
+print("복원된 모델의 정확도: {:5.2f}%".format(100*acc))
