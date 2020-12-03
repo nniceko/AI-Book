@@ -1,0 +1,36 @@
+import numpy as np 
+import tensorflow as tf 
+
+def step_func(x): # 계단함수
+  return (x>=0)*1
+#입력값
+x = np.array([[1, 1], [1, 0], [0, 1], [0, 0]]) 
+#출력값
+y = np.array([[1], [0], [0], [0]])
+#초기 가중치
+w = tf.random.normal([2], -1, 1) 
+#바이어스
+b = 1.0 
+w0 = 0.5
+#학습률
+a = 0.1
+
+#1000회 반복
+for i in range(1000): 
+  error_sum = 0 
+  for j in range(4):  #특징값 4개에 대해 실시
+    output = step_func(np.sum(x[j]*w)+b*w0) 
+    error = y[j][0] - output # 에러 계산
+    w = w + x[j] * a * error #학습률과 에러를 이용한 가중치 갱신
+    b = b + a * error # 바이어스 갱신
+    error_sum += error #에러 누적
+    
+  if i % 50 == 0: #50번씩 건너뛰며 출력
+    print(i, error_sum)
+
+for i in range(4): # 임계값 적용
+   if step_func(np.sum(x[i]*w)+b*w0) >0.0: 
+     output=1.0 
+   else: 
+     output=0.0
+   print('X:', x[i], 'Y:', y[i], 'Output:',step_func(np.sum(x[i]*w)+b*w0), 'result:', output)
