@@ -1,0 +1,46 @@
+# 바퀴와 날개의 유무에 따라, '배','자동차','비행기'로 분류하는 신경망 모델
+# 신경망은 3개의 다층 레이어로 구성
+import tensorflow as tf
+import numpy as np
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+
+# [바퀴 있으면 1 없으면 0, 날개 있으면 1 없으면 0]
+x_data = np.array(
+    [[0, 0], [1, 0], [1, 1], [0, 0], [0, 0], [0, 1]])
+
+# [배, 자동차, 비행기]
+y_data = np.array([
+    [1, 0, 0],  # 배
+    [0, 1, 0],  # 자동차
+    [0, 0, 1],  # 비행기
+    [1, 0, 0],  # 배
+    [1, 0, 0],  # 배
+    [0, 0, 1]   # 비행기
+])
+
+model = tf.keras.Sequential()
+model.add(Dense(input_dim=2, units=10, activation='relu'))
+model.add(Dense(units=5, activation='relu'))
+# 3개의 출력 유닛을 가진 소프트맥스 층을 추가
+model.add(Dense(units=3, activation='softmax')) 
+
+print("=============initial weights==========")
+for weight in model.weights: 
+  print(weight)
+
+model.compile(optimizer=tf.optimizers.Adam(learning_rate=0.01), loss='categorical_crossentropy', metrics=['accuracy'])
+
+model.summary()
+history = model.fit(x_data, y_data, epochs=100, batch_size=1)
+
+print("=============weights==========")
+for weight in model.weights: 
+  print(weight)
+
+print("=============test results==========")
+print(x_data)
+print(model.predict(x_data))  
+print("\n Accuracy: %.4f" % (model.evaluate(x_data, y_data)[1]))# list index
+#model.evaluate() [0]은 loss리턴, [1]은 accuracy리턴
+print("===================================")
