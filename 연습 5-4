@@ -1,0 +1,20 @@
+import numpy as np 
+import tensorflow as tf 
+
+def sigmoid(x): #시그모이드 함수
+  return 1/(1+np.exp(-x))
+
+x = np.array([[1, 1], [1, 0], [0, 1], [0, 0]]) 
+y = np.array([[0], [1], [1], [0]])
+w = tf.random.normal([2], -0.5, 0.5) 
+b = 1.0 
+w0 = 0.5
+a = 0.1
+
+#================나머지 코드 동일==========
+for i in range(4):
+   if sigmoid(np.sum(x[i]*w)+b*w0) >0.5: 
+     output=1.0 
+   else: 
+     output=0.0
+   print('X:', x[i], 'Y:', y[i], 'Output:',sigmoid(np.sum(x[i]*w)+b*w0), 'result:', output)
