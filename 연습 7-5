@@ -1,0 +1,30 @@
+import tensorflow as tf
+import numpy as np
+import matplotlib.pylab as plt
+from tensorflow.keras.datasets.mnist import load_data
+from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import LSTM, Flatten, Dense, Bidirectional
+from tensorflow.keras.optimizers import Adam
+
+# 연습 7-2와 코드 동일
+
+# 모델 구성
+model = Sequential()
+model.add(Bidirectional(LSTM(units=64, return_sequences = True),                        input_shape = (28, 28)))
+model.add(Bidirectional(LSTM(units=64, return_sequences = True)))
+model.add(Bidirectional(LSTM(units=64, return_sequences = True)))
+model.add(Flatten())
+model.add(Dense(10, activation='softmax'))
+
+model.compile(optimizer=Adam(learning_rate=0.001), 
+              loss='categorical_crossentropy', metrics=['accuracy'])
+
+model.summary()
+history = model.fit(train_images, one_hot_train_labels, epochs=5, batch_size=32)
+
+print("\n=============test results==========")
+labels=model.predict(test_images)
+print("\n Accuracy: %.4f" % (model.evaluate(test_images, 
+                                            one_hot_test_labels)[1])) 
+print("===================================")
