@@ -1,0 +1,33 @@
+import tensorflow as tf
+import matplotlib.pyplot as plt
+import numpy as np
+
+#입력 샘플 데이터
+X = [0, 0.5, 1.0, 1.5, 2.0, 2.5]
+Y = [0.3, 1.9, 2.4, 4.1, 6.8, 7.9]
+
+#X, Y에 대한 평균 구하기
+x_mean = sum(X)/len(X)
+y_mean = sum(Y)/len(Y)
+
+#최소제곱법을 이용하여 a, b 계산하기
+division = sum((y-y_mean)*(x-x_mean) for y, x in list(zip(Y,X)))
+divisor = sum((x-x_mean)**2 for x in X)
+a = division/divisor
+b =y_mean-a*x_mean
+
+#그래프 그리기 위해 새로운 X값을 입력
+new_X = np.arange(0,3, 0.05)
+
+#선형 회귀직선을 이용하여 예측 Y값 계산
+new_Y = a*new_X+b
+
+print('a:', a, 'b:',b)
+#화면에 그래프로 그리기
+
+plt.plot(X,Y, 'ro', label='Sample Data')
+plt.plot(new_X, new_Y, 'b-', label='Test Data')
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.legend()
+plt.show()
