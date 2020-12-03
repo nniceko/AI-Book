@@ -1,0 +1,13 @@
+import numpy as np 
+import tensorflow as tf 
+
+def sigmoid(x): #시그모이드 함수
+  return 1/(1+np.exp(-x))
+
+#================나머지 코드 동일==========
+for i in range(4):
+   if sigmoid(np.sum(x[i]*w)+b*w0) >0.5: 
+     output=1.0 
+   else: 
+     output=0.0
+   print('X:', x[i], 'Y:', y[i], 'Output:',sigmoid(np.sum(x[i]*w)+b*w0), 'result:', output)
