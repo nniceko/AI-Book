@@ -1,0 +1,9 @@
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(12,4)) #그래프의 가로세로 비율
+plt.subplot(1,1,1) #1행1열의 첫 번째 위치
+plt.plot(history.history['loss'], 'b--', label='loss') #loss는 파란색 점선
+plt.plot(history.history['accuracy'], 'g-', label='Accuracy') #accuracy는 녹색실선
+plt.xlabel('Epoch')
+plt.legend()
+plt.show()
