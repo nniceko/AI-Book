@@ -1,0 +1,50 @@
+import tensorflow as tf
+import numpy as np
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+
+#MNIST 데이터셋을 로드하여 준비. 샘플 값을 정수에서 부동소수로 변환
+
+(train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.mnist.load_data()
+
+import matplotlib.pylab as plt
+
+plt.figure(figsize=(6, 1))
+for i in range(36):
+    plt.subplot(3, 12, i+1)
+    plt.imshow(train_images[i], cmap="gray")
+    plt.axis("off")
+plt.show()
+
+# 28x28차원의 벡터가 60000개 채널은 1개
+train_images = train_images.reshape((60000, 28,28,1)) 
+test_images = test_images.reshape((10000, 28,28,1))
+train_images, test_images = train_images / 255.0, test_images / 255.0
+
+print(train_labels[:10])
+
+from tensorflow.keras.utils import to_categorical
+
+one_hot_train_labels = to_categorical(train_labels, 10)
+one_hot_test_labels = to_categorical(test_labels, 10)
+print(one_hot_train_labels[:10])
+
+#층을 차례대로 쌓아 tf.keras.Sequential 모델을 만든다.
+#훈련에 사용할 옵티마이저(optimizer)와 손실 함수를 선택
+model = tf.keras.models.Sequential()
+model.add(tf.keras.layers.Conv2D(32, (3, 3), activation='relu', strides=(1, 1), input_shape=(28, 28, 1)))
+model.add(tf.keras.layers.MaxPooling2D((2, 2)))
+model.add(tf.keras.layers.Conv2D(64, (3, 3), activation='relu'))
+model.add(tf.keras.layers.MaxPooling2D((2, 2)))
+model.add(tf.keras.layers.Conv2D(64, (3, 3), activation='relu'))
+model.add(tf.keras.layers.Flatten())
+model.add(tf.keras.layers.Dense(64, activation='relu'))
+model.add(tf.keras.layers.Dense(10, activation='softmax'))
+
+
+model.compile(optimizer=tf.optimizers.Adam(learning_rate=0.01), loss='categorical_crossentropy', metrics=['accuracy'])
+
+model.summary()
+history = model.fit(train_images, one_hot_train_labels, epochs=5, batch_size=10)
+
+# 화면 출력: 예제 6-1과 동일 (생략)
