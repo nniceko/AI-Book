@@ -1,5 +1,5 @@
 from tensorflow.keras.datasets import mnist
-from tensorflow.keras.layers import Input, Dense
+from tensorflow.keras.layers import Input, Dense,Dropout
 from tensorflow.keras.models import Sequential, Model
 import tensorflow as tf
 import numpy as np
@@ -18,6 +18,7 @@ generator.add(Dense(units=n_output, activation='tanh'))
 # 판별자 모델 정의
 discriminator = Sequential()
 discriminator.add(Dense(256, input_dim=n_output, activation='relu'))
+discriminator.add(Dropout(0.3))
 discriminator.add(Dense(1, activation='sigmoid'))
 
 # 생성자와 판별자 모델을 통합한 GAN 모델 구현
@@ -27,6 +28,7 @@ gan = Model(g_input, g_output)
 
 # 판별자 모델 학습을 위한 최적화 함수 및 손실 함수 설정
 discriminator.trainable = True
+adam = tf.optimizers.Adam(lr=0.0002, beta_1=0.5)
 discriminator.compile(loss='binary_crossentropy', optimizer='adam')
 
 # GAN 모델 학습을 위한 최적화 함수 및 손실 함수 설정
@@ -86,7 +88,7 @@ for i in range(n_epoch):
         gen_imgs = generator.predict(noise)  # 생성자를 이용한 25개의 이미지 생성
 
         # 이미지 픽셀값 0~1로 조정
-        gen_imgs = 0.5 * gen_imgs + 0.5  
+        #gen_imgs = 0.5 * gen_imgs + 0.5  
         
        # 생성된 이미지 출력 및 저장
         fig, axs = plt.subplots(5, 5)  
@@ -97,4 +99,4 @@ for i in range(n_epoch):
                 axs[j, k].axis('off')
                 count += 1
         plt.show()
-        fig.savefig("gan_results/g_mnist_%d.png" % (i + 1)) #경로는 지정되어 있어야 함. 경로가 지정되지 않은 경우 '#'로 막고 코드 실행
+        fig.savefig("gan_results/g_mnist_%d.png" % (i + 1)) #경로가 지정되어 있지 않다면 이 부분을 막고 실행
