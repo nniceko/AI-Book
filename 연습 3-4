@@ -8,5 +8,5 @@ print(c, type(c))
 c_tensor = tf.constant(c)
 # 상수형 텐서와 타입을 출력
 print(c_tensor, type(c_tensor))
-# 텐서를 다시 Numpy
+# 텐서를 다시 Numpy 타입으로 
 print( type(c_tensor.numpy()))
