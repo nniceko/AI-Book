@@ -6,7 +6,7 @@ def sigmoid(x): #시그모이드 함수
 
 x = np.array([[1, 1], [1, 0], [0, 1], [0, 0]]) 
 y = np.array([[0], [1], [1], [0]])
-w = tf.random.normal([2], -0.5, 0.5) 
+w = tf.random.normal([2], 0, 1) 
 b = 1.0 
 w0 = 0.5
 a = 0.1
