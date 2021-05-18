@@ -32,7 +32,6 @@ print(one_hot_train_labels[:10])
 #훈련에 사용할 옵티마이저(optimizer)와 손실 함수를 선택:
 model = tf.keras.models.Sequential()
 model.add(tf.keras.layers.Dense(input_dim=784, units=128, activation='relu'))
-model.add(tf.keras.layers.Dropout(0.2))
 model.add(tf.keras.layers.Dense(units=10, activation='softmax'))
 
 model.compile(optimizer=tf.optimizers.Adam(learning_rate=0.01), loss='categorical_crossentropy', metrics=['accuracy'])
