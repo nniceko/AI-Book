@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 #Y X에 대해 예측된 y의 값
 X = [0, 0.5, 1.0, 1.5, 2.0, 2.5] 
 Y = [0.3, 1.9, 2.4, 4.1, 6.8, 7.9]
-# W, b를 -1.0~1.0 사이에 정규분포 갖는 shpae 1의 변수형 텐서로 설정
+# W, b를 -1.0~1.0 사이에 균등분포 갖는 shpae 1의 변수형 텐서로 설정
 W = tf.Variable(tf.random.uniform([1], -1.0, 1.0))
 b = tf.Variable(tf.random.uniform([1], -1.0, 1.0))
 
