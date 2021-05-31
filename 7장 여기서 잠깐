@@ -33,7 +33,6 @@ model.add(tf.keras.layers.Conv2D(16, (3, 3), activation='relu'))
 
 model.add(Reshape(target_shape = (13*13, 16)))
 model.add(LSTM(30, input_shape = (13*13, 16), return_sequences = False))
-model.add(Flatten())
 model.add(Dense(10, activation='softmax'))
 model.compile(optimizer=Adam(learning_rate=0.001), 
               loss='categorical_crossentropy', metrics=['accuracy'])
