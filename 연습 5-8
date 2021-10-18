@@ -5,10 +5,11 @@ from google.colab import files #colab라이브러리에서 file 대한 모듈만
 # 파일 업로드를 위한 딕셔너리 객체를 반환(키:파일이름, 값: 업로드된 데이터)
 # 해당 파일은 코랩의 메모리에 임시 저장됨
 uploaded = files.upload() 
-
+#filename=''
 for fn in uploaded.keys():
-  print('User uploaded file "{name}" with {lenght} bytes'.format(name=fn, lenght=len(uploaded[fn])))
-  
+  print('User uploaded file "{name}" with {length} bytes'.format(name=fn, length=len(uploaded[fn])))
+  filename=fn
+
 #pd.read_csv() 함수를 이용하여 임시저장된 ‘data.csv’파일을 읽고 화면에 출력하자. 
-da=pd.read_csv(io.StringIO(uploaded['data.csv'].decode('utf-8')))
+da=pd.read_csv(io.StringIO(uploaded[filename].decode('utf-8')))
 print(da)
