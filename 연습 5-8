@@ -5,7 +5,7 @@ from google.colab import files #colab라이브러리에서 file 대한 모듈만
 # 파일 업로드를 위한 딕셔너리 객체를 반환(키:파일이름, 값: 업로드된 데이터)
 # 해당 파일은 코랩의 메모리에 임시 저장됨
 uploaded = files.upload() 
-#filename=''
+
 for fn in uploaded.keys():
   print('User uploaded file "{name}" with {length} bytes'.format(name=fn, length=len(uploaded[fn])))
   filename=fn
