@@ -1,0 +1,37 @@
+from tensorflow.keras.datasets import mnist
+from tensorflow.keras.layers import Input, Dense
+from tensorflow.keras.models import Sequential, Model
+import tensorflow as tf
+import numpy as np
+import matplotlib.pyplot as plt
+
+mnist = tf.keras.datasets.mnist
+#MNIST 데이터셋을 로드하여 준비
+(train_images, train_labels), (test_images, test_labels) = tf.keras.datasets.mnist.load_data()
+train_images = train_images.reshape((60000, 28*28,1)) # 28x28차원의 벡터가 60000개 채널은 1개
+test_images = test_images.reshape((10000, 28*28,1))
+train_images, test_images = train_images / 255.0, test_images / 255.0
+
+from tensorflow.keras.utils import to_categorical
+one_hot_train_labels = to_categorical(train_labels, 10)
+one_hot_test_labels = to_categorical(test_labels, 10)
+print(one_hot_train_labels[:10])
+
+# Functional API를 이용한 모델 구현  
+# tensorflow.keras.models.Model의 inputs() & outputs() 메소드 설정을 이용해 모델 정의
+inputs = tf.keras.Input(shape=(28*28, ))
+x = tf.keras.layers.Dense(input_dim=784, units=256, activation='relu')(inputs)
+y = tf.keras.layers.Dense(input_dim=784, units=256, activation='relu')(inputs)
+C=x+y
+outputs = tf.keras.layers.Dense(input_dim=256, units=10, activation='sigmoid')(C)
+model = tf.keras.models.Model(inputs=inputs, outputs=outputs)
+
+model.compile(optimizer=tf.optimizers.Adam(learning_rate=0.01), loss='categorical_crossentropy', metrics=['accuracy'])
+
+model.summary()
+history = model.fit(train_images, one_hot_train_labels, epochs=5, batch_size=64, validation_split=0.2)
+
+print("\n=============test results==========")
+labels=model.predict(test_images)
+#verbose는 학습 중 출력되는 문구를 설정하는 것으로, 주피터노트북(Jupyter Notebook)을 사용할 때는 verbose=2로 설정하여 진행 막대(progress bar)가 나오지 않도록 설정한다.
+print("\n Accuracy: %.4f" % (model.evaluate(test_images, one_hot_test_labels, verbose=2)[1])) #list index
