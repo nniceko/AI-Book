@@ -1,0 +1,33 @@
+import tensorflow as tf
+from PIL import Image
+import numpy as np
+import matplotlib.pyplot as plt
+import tensorflow_hub as hub
+import functools
+import os
+
+#load image
+def load_image(image_path):
+  image = tf.io.read_file(image_path)
+  image = tf.image.decode_image(image, channels=3)
+  image = tf.image.convert_image_dtype(image, tf.float32)
+  image = tf.image.resize(image, (256,256))
+  image = image[tf.newaxis,:] 
+  return image
+
+def tensor2image(image):
+  image = image*255.0
+  image = np.array(image, dtype=np.uint8)
+  return Image.fromarray(image)
+
+content_image = load_image('/content/gdrive/My Drive/content1.png')
+style_image = load_image('/content/gdrive/My Drive/style1.jpg')
+
+hub_module = hub.load('https://tfhub.dev/google/magenta/arbitrary-image-stylization-v1-256/2')
+stylized_image = hub_module(tf.constant(content_image), tf.constant(style_image))[0][0]
+#stylized_image = outputs[0][0]
+
+final_image = tensor2image(stylized_image)
+if final_image.mode != 'RGB':
+    final_image = final_image.convert('RGB')
+final_image.save('/content/gdrive/My Drive/stylized_image1.jpg')
