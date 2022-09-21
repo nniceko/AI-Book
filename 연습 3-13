@@ -15,10 +15,10 @@ W = tf.Variable(tf.random.normal([3, 2], dtype=tf.float32), name="W")
 b = tf.Variable(tf.random.normal([2, 1], dtype=tf.float32), name="b")
 
 @tf.function  #tf.function
-def forward(X1,W1,b1):
-  return tf.matmul(X1, W1) + b1
+def forward(X1):
+  return tf.matmul(X1, W) + b1
 
-Y = forward(X,W,b)
+Y = forward(X)
 
 print("=== X ===")
 print(X)
