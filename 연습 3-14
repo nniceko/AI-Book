@@ -1,6 +1,5 @@
 import tensorflow as tf
 import numpy as np
-import matplotlib as mpl
 import matplotlib.pylab as plt
 
 X = [1., 2., 3.]
