@@ -10,11 +10,10 @@ X = [1., 2., 3.]
 W = tf.Variable(tf.random.normal([1], dtype=tf.float32))
 b = tf.Variable(tf.random.normal([1], dtype=tf.float32))
 
-@tf.function  #tf.function
-def forward(X1,W1,b1):
-  return X1 * W1 + b1  #일차 식
-
-Y = forward(X,W,b)
+@tf.function  #tf.function
+def forward(X1):
+  return X1 * W + b  #일차 식
+Y = forward(X)
 
 print(Y)
 plt.plot(X, Y, 'ro')
