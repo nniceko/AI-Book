@@ -1,6 +1,6 @@
-from tensorflow.keras.datasets import mnist
-from tensorflow.keras.layers import Input, Dense,Dropout
-from tensorflow.keras.models import Sequential, Model
+from keras.datasets import mnist
+from keras.layers import Input, Dense,Dropout
+from keras.models import Sequential, Model
 import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
@@ -28,19 +28,19 @@ gan = Model(g_input, g_output)
 
 # 판별자 모델 학습을 위한 최적화 함수 및 손실 함수 설정
 discriminator.trainable = True
-adam = tf.optimizers.Adam(lr=0.0002, beta_1=0.5)
-discriminator.compile(loss='binary_crossentropy', optimizer=adam)
+adam = tf.optimizers.Adam(learning_rate=0.0002, beta_1=0.5)
+discriminator.compile(loss='binary_crossentropy', optimizer='adam')
 
 # GAN 모델 학습을 위한 최적화 함수 및 손실 함수 설정
 # GAN 모델에 대한 학습은 오직 생성자에 대한 가중치 업데이트가 수행되어야 하므로 판별자 모델의 학습 여부를 False로 설정함
 discriminator.trainable = False   
-gan.compile(loss='binary_crossentropy', optimizer=adam)
+gan.compile(loss='binary_crossentropy', optimizer='adam')
 
 # GAN 모델 구조 출력
 gan.summary()
 
 # 모델 학습
-n_epoch = 100
+n_epoch = 10
 batch_size = 128
 saving_interval = 10
   
@@ -68,19 +68,21 @@ for i in range(n_epoch):
          
         # 현재 배치에 대한 판별자 모델의 가중치 1회 갱신 및 오차 갱신
         # 진짜 이미지에 대한 판별자 모델 가중치 갱신 및 오차 계산
-        d_loss_real = discriminator.train_on_batch(image_batch, true_labels)      
+        d_loss_real = discriminator.train_on_batch(image_batch,true_labels)      
         # 가짜 이미지에 대한 판별자 모델 가중치 갱신 및 오차 계산
         noise = np.random.normal(0, 1, (n_bt_imgs, n_noise))
         gen_imgs = generator.predict(noise)      
-        d_loss_fake = discriminator.train_on_batch(gen_imgs, fake_labels)
+        d_loss_fake = discriminator.train_on_batch(gen_imgs, 
+                                                   fake_labels)
         d_loss = 0.5 * np.add(d_loss_real, d_loss_fake)   
       
         # 현재 배치에 대한 GAN 모델 가중치 1회 갱신 및 오차 계산
         g_loss = gan.train_on_batch(noise, true_labels)      
 
     # 2) 중간 과정 생성되는 이미지 확인 
-    if (i +1) % saving_interval == 0 or i == 1:
-        print('d_loss:%.4f' % d_loss, ' g_loss:%.4f' % g_loss)
+    if (i +1) % saving_interval == 0 or i == 0:
+        print('Epoch:%d' % (i + 1), 
+             'd_loss:%.4f' % d_loss, ' g_loss:%.4f' % g_loss)
         
         # 학습된 생성자 모델을 이용하여 25개의 이미지 생성
         noise = np.random.normal(0, 1, (25, n_noise))  # 25개의 노이즈 벡터 생성
@@ -98,4 +100,4 @@ for i in range(n_epoch):
                 axs[j, k].axis('off')
                 count += 1
         plt.show()
-        fig.savefig("gan_results/g_mnist_%d.png" % (i + 1)) #경로가 지정되어 있지 않다면 이 부분을 막고 실행
+        fig.savefig("/content/gdrive/My Drive/gan_results/g_mnist_%d.png" % (i + 1))
