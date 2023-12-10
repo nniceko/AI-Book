@@ -1,7 +1,6 @@
 from tensorflow.keras.datasets import mnist
 from tensorflow.keras.layers import Input, Dense, LeakyReLU, Dropout
 from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.optimizers import Adam
 import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
@@ -40,7 +39,7 @@ gan = Model(g_input, g_output)
 
 # 판별자 모델 학습을 위한 최적화 함수 및 손실 함수 설정
 discriminator.trainable = True
-adam = Adam(lr=0.0002, beta_1=0.5)
+adam = tf.optimizers.legacy.Adam(learning_rate=0.0002, beta_1=0.5)
 discriminator.compile(loss='binary_crossentropy', optimizer=adam)
 
 
