@@ -1,7 +1,8 @@
 import tensorflow as tf
-from PIL import Image
+from PIL import Image #이미지 분석 및 처리 Pillow 라이브러리
 import numpy as np
 import matplotlib.pyplot as plt
+#TensorFlow Hub는 재사용 가능한 머신러닝을 위한 개방형 리포지토리 및 라이브러리
 import tensorflow_hub as hub
 import functools
 import os
@@ -12,7 +13,9 @@ def load_image(image_path):
   image = tf.image.decode_image(image, channels=3)
   image = tf.image.convert_image_dtype(image, tf.float32)
   image = tf.image.resize(image, (256,256))
-  image = image[tf.newaxis,:] 
+  #tr.newaxis를 이용한 reshape방법. 맨 앞에 shape 1이 추가 (원래 image(256,256,3))=>(1,256,256,3)
+  image = image[tf.newaxis,:]
+  #print(image) 
   return image
 
 def tensor2image(image):
