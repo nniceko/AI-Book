@@ -10,11 +10,17 @@ x = np.array([[1, 1], [1, 0], [0, 1], [0, 0]])
 y = np.array([[0], [1], [1], [0]])
 
 #시퀀셜 함수를 이용하여 딥러닝 네트워크 구조를 한층한층 쌓을 수 있는 모델 생성
-model = tf.keras.Sequential()
+model = tf.keras.Sequential([
+    tf.keras.Input(shape=(2,)),  # 입력 크기 명시
+    tf.keras.layers.Dense(units=2, activation='sigmoid'),
+    tf.keras.layers.Dense(units=1, activation='sigmoid')
+])
+
+#model = tf.keras.Sequential()
 #레이어 객체의 Dense()함수를 이용하여 입력 벡터2, 유닛 개수 2, 활성화 함수는 시그모이드를 갖는 1번째 레이어를 설정한다.
-model.add(tf.keras.layers.Dense(units=2, input_dim=2, activation='sigmoid'))
+#model.add(tf.keras.layers.Dense(units=2, input_dim=2, activation='sigmoid'))
 #레이어 객체의 Dense()함수를 이용하여 유닛 개수 1, 활성화 함수는 시그모이드를 갖는 2번째 레이어를 설정한다.
-model.add(tf.keras.layers.Dense(units=1, activation='sigmoid')) 
+#model.add(tf.keras.layers.Dense(units=1, activation='sigmoid')) 
 
 #모델을 준비시키는 명령어: 학습률 0.1, 손실은 ‘mean_squarred_error’, 최적화는 SGD를 사용                       
 model.compile(optimizer=tf.optimizers.SGD(learning_rate=0.1), loss='mse')
