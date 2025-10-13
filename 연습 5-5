@@ -2,8 +2,8 @@ import numpy as np
 import tensorflow as tf 
 
 #케라스 라이브러리 중 Sequential()함수와 Dense()함수를 불어와서 사용할 경우
-#from tensorflow.keras.models import Sequential
-#from tensorflow.keras.layers import Dense
+#from keras.models import Sequential
+#from keras.layers import Dense
 
 #입력벡터와 출력 벡터 
 x = np.array([[1, 1], [1, 0], [0, 1], [0, 0]]) 
