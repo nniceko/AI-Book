@@ -3,8 +3,8 @@
 import tensorflow as tf
 import numpy as np
 import os
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
+from keras.models import Sequential
+from keras.layers import Dense
 
 # [바퀴, 날개]
 x_data = np.array(
@@ -26,14 +26,14 @@ model.add(Dense(units=3, activation='softmax'))
 model.compile(optimizer=tf.optimizers.Adam(learning_rate=0.01), loss='categorical_crossentropy', metrics=['accuracy'])
 model.summary()
 
-checkpoint_path = "/content/gdrive/My Drive/Colab Notebooks/cp.ckpt"
+checkpoint_path = "/content/gdrive/MyDrive/Colab Notebooks/cp.weights.h5"
 checkpoint_dir = os.path.dirname(checkpoint_path)
 # 체크포인트 콜백 만들기
 cp_callback = tf.keras.callbacks.ModelCheckpoint(checkpoint_path,
                                                  save_weights_only=True,
                                                  verbose=1)
-history = model.fit(x_data, y_data, epochs=100, batch_size=1, callbacks = [cp_callback])  # 훈련 단계에 콜백을 전달한다
-
+history = model.fit(x_data, y_data, epochs=100, batch_size=1)#, callbacks = [cp_callback])  # 훈련 단계에 콜백을 전달한다
+model.load_weights("/content/gdrive/MyDrive/Colab Notebooks/cp.weights.h5")
 print("=============weights==========")
 for weight in model.weights: 
   print(weight)
