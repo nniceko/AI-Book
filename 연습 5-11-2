@@ -7,18 +7,10 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from tensorflow import keras
 
-# [바퀴, 날개]
-x_data = np.array(
-    [[0, 0], [1, 0], [1, 1], [0, 0], [0, 0], [0, 1]])
-
-y_data = np.array([
-    [1, 0, 0],  # 배
-    [0, 1, 0],  # 자동차
-    [0, 0, 1],  # 비행기
-    [1, 0, 0],  # 배
-    [1, 0, 0],  # 배
-    [0, 0, 1]   # 비행기
-])
+data = np.loadtxt('/content/gdrive/My Drive/Colab Notebooks/data.csv’,
+delimiter=',', skiprows=1, unpack=True, dtype=np.float32)
+x_data = np.transpose(data[0:2]) #첫번째 행부터 2개
+y_data = np.transpose(data[2:]) #세번째 행부터 마지막 행까지
 
 # 가중치와 옵티마이저를 포함하여 정확히 동일한 모델을 다시 생성
 new_model = keras.models.load_model("/content/gdrive/My Drive/Colab Notebooks/my_model.h5")
