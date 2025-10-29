@@ -31,16 +31,17 @@ print(one_hot_train_labels[:10])
 
 #층을 차례대로 쌓아 tf.keras.Sequential 모델을 만든다.
 #훈련에 사용할 옵티마이저(optimizer)와 손실 함수를 선택
-model = tf.keras.models.Sequential()
-model.add(tf.keras.layers.Conv2D(32, (3, 3), activation='relu', strides=(1, 1), input_shape=(28, 28, 1)))
-model.add(tf.keras.layers.MaxPooling2D((2, 2)))
-model.add(tf.keras.layers.Conv2D(64, (3, 3), activation='relu'))
-model.add(tf.keras.layers.MaxPooling2D((2, 2)))
-model.add(tf.keras.layers.Conv2D(64, (3, 3), activation='relu'))
-model.add(tf.keras.layers.Flatten())
-model.add(tf.keras.layers.Dense(64, activation='relu'))
-model.add(tf.keras.layers.Dense(10, activation='softmax'))
-
+model = tf.keras.Sequential([
+    tf.keras.layers.Input(shape=(28, 28, 1)),
+    tf.keras.layers.Conv2D(32, (3, 3), activation='relu', strides=(1, 1),padding='valid'),
+    tf.keras.layers.MaxPooling2D((2, 2)),
+    tf.keras.layers.Conv2D(64, (3, 3), activation='relu', padding='valid'),
+    tf.keras.layers.MaxPooling2D((2, 2)),
+    tf.keras.layers.Conv2D(64, (3, 3), activation='relu',padding='valid'),
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(64,activation='relu'),
+    tf.keras.layers.Dense(10, activation='softmax')
+])
 
 model.compile(optimizer=tf.optimizers.Adam(learning_rate=0.01), loss='categorical_crossentropy', metrics=['accuracy'])
 
