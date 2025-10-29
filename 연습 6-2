@@ -8,13 +8,13 @@ from tensorflow.keras.layers import Dense
 
 #층을 차례대로 쌓아 tf.keras.Sequential 모델을 만든다.. 
 #훈련에 사용할 옵티마이저(optimizer)와 손실 함수를 선택:
-model = tf.keras.models.Sequential()
-model.add(tf.keras.layers.Dense(input_dim=784, units=128))
-#배치 정규화 시행
-model.add(tf.keras.layers.BatchNormalization())
-#정규화된 결과값에 relu 활성화 함수 적용
-model.add(tf.keras.layers.Activation('relu'))
-model.add(tf.keras.layers.Dense(units=10, activation='softmax'))
+model = Sequential([
+    tf.keras.layers.Input(shape=(784,)),
+    tf.keras.layers.Dense(units=128),    
+    tf.keras.layers.BatchNormalization(),
+    tf.keras.layers.Activation('relu'),  
+    tf.keras.layers.Dense(units=10, activation='softmax')
+])
 
 model.compile(optimizer=tf.optimizers.Adam(learning_rate=0.01), loss='categorical_crossentropy', metrics=['accuracy'])
 
