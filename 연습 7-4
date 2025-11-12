@@ -21,7 +21,7 @@ one_hot_test_labels = to_categorical(test_labels, 10)
 # 모델 구성
 model = Sequential([ 
     tf.keras.layers.Input(shape=(28, 28)),
-    tf.keras.layers.GRU(units=64, return_sequence=True),
+    tf.keras.layers.GRU(units=64, return_sequences=True),
     tf.keras.layers.Flatten(),  
     Dense(10, activation='softmax')
 ])
