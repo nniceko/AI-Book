@@ -19,10 +19,12 @@ one_hot_train_labels = to_categorical(train_labels, 10)
 one_hot_test_labels = to_categorical(test_labels, 10)
 
 # 모델 구성
-model = Sequential()
-model.add(GRU(64, return_sequences=True, input_shape = (28, 28)))
-model.add(Flatten())
-model.add(Dense(10, activation='softmax'))
+model = Sequential([ 
+    tf.keras.layers.Input(shape=(28, 28)),
+    tf.keras.layers.GRU(units=64, return_sequence=True),
+    tf.keras.layers.Flatten(),  
+    Dense(10, activation='softmax')
+])
 
 # 모델 학습을 위한 최적화 함수 및 손실 함수 등 설정
 model.compile(optimizer=Adam(learning_rate=0.001), 
